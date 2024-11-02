@@ -72,11 +72,15 @@ export const useUserStore = create((set, get) => ({
     getALLUsers : async () =>  {
         try { 
             set({ loading: true})
-            const {data} = axios.get('auth/users')
-            set({users : [...data.users] })
+            const {data} = await axios.get('auth/users')
+            set({users : data.users })
             set({ loading: false})
+            console.log(data);
+            
         }catch(error){
             set({ loading: false })
+            console.log(error);
+            
             return toast.error('something wrong happened');
             
         }

@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken'
 // }
 
 //register endpoint
+
 const createToken = (user, res) => {
     const  accessToken = jwt.sign({ userId  : user._id}, process.env.SECRET, {})
     return accessToken
@@ -41,7 +42,6 @@ export const authRegister = async (req, res) => {
 export const authLogin = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log(email , password);
         
         const user = await User.findOne({ email })
         if (!user) return res.status(404).json({ error: "email or password is worng" })
@@ -87,7 +87,7 @@ export const getProfile = async (req, res) => {
     try {
         const { accessToken } = req.cookies
         
-        console.log("+");
+    
         
         return res.status(200).json({user : req.user})
 
@@ -117,7 +117,7 @@ export const deleteUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}, 'id email role')
+        const users = await User.find({}, 'id email role firstName createdAt')
 
         res.status(200).json({ users })
 

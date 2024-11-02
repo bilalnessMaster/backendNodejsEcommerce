@@ -1,6 +1,6 @@
 import Product from "../lib/models/Product.model.js";
 import { cloudinary } from "../lib/cloudinary/cloudinary.js";
-
+import Review  from '../lib/models/Review.model.js'
 export const getAllProducts = async (req, res) => {
     try {
         const { category, color, minPrice, maxPrice, page = 1 , limit = 10 } = req.query
@@ -41,6 +41,7 @@ export const createProduct = async (req, res) => {
         if(imageURL) { 
             cloudinaryResponse = await cloudinary.uploader.upload(imageURL ,{ folder :  'products' , width: 200, height: 300, gravity: "auto", crop: "fill"} )
         }
+
         const product = await Product.create({
             name,
             category,
@@ -67,14 +68,8 @@ export const deleteProduct = async (req, res) => {
         const { id } = req.params
         const product = await Product.findByIdAndDelete(id)
         let imgurl = product.imageURL.split('/').pop().split('.')[0]
-       
-        console.log(imgurl);
-        
         if (!product) return res.status(404).json({ error: "product doesnt exist " })
         res.status(200).json({ message: "product has been deleted !!" })
-
-
-
     } catch (error) {
         console.log('while delete product', error);
         res.status(404).json({ error: "internal error in server" })
@@ -90,8 +85,9 @@ export const getSingleProduct = async (req , res) => {
     try{
         const {id} = req.params 
         const product = await Product.findById(id)
+        const review = await Review.find({productId : id}).populate('userId' , ['firstName' , 'profileImage'])
         if(!product) return res.status(404).json({error : 'product not found'})
-        return res.status(200).json({message : 'product found' , product : product})
+        return res.status(200).json({message : 'product found' , product : product, reviews : review})
 
 
     }catch(error){
@@ -124,3 +120,5 @@ export const  relatedProducts = async (req ,res) =>{
         res.status(404).json({ error: "internal error in server" })
     }
 }
+
+
