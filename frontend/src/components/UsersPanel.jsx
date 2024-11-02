@@ -7,6 +7,7 @@ const UsersPanel = () => {
     useEffect(()=>{
         getALLUsers()
     },[getALLUsers])
+
     if(!users) return 'loading'
     // console.log(users);
     
@@ -28,7 +29,7 @@ const UsersPanel = () => {
                     <tbody>
                   
                     {users && users.map((user)=> (
-                        <User {...user} />
+                        <User key={user._id} {...user} />
                     ))}
                 
                     </tbody>

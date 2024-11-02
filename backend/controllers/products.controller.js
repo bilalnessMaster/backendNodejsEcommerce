@@ -1,5 +1,5 @@
 import Product from "../lib/models/Product.model.js";
-import { cloudinary } from "../lib/cloudinary/cloudinary.js";
+import cloudinary  from "../lib/cloudinary/cloudinary.js";
 import Review  from '../lib/models/Review.model.js'
 export const getAllProducts = async (req, res) => {
     try {
@@ -37,9 +37,12 @@ export const getAllProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
         let cloudinaryResponse = null
-        const { name, category, oldPrice, price, imageURL, color, rating, description } = req.body
+        const { name, category, oldPrice, price, imageURL, color, description } = req.body
+        
         if(imageURL) { 
-            cloudinaryResponse = await cloudinary.uploader.upload(imageURL ,{ folder :  'products' , width: 200, height: 300, gravity: "auto", crop: "fill"} )
+            cloudinaryResponse = await cloudinary.uploader.upload(imageURL, {
+                folder: "products",
+              })
         }
 
         const product = await Product.create({
@@ -49,7 +52,6 @@ export const createProduct = async (req, res) => {
             price,
             imageURL: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : '',
             color,
-            rating,
             description
         })
         if (!product) return res.status(404).json({ error: "error while creating products" })
@@ -57,7 +59,7 @@ export const createProduct = async (req, res) => {
 
     } catch (error) {
         console.log('while creating product', error);
-        res.status(404).json({ error: "internal error in server" })
+        res.status(404).json({ error: error.message })
     }
 }
 

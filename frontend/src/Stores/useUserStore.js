@@ -75,11 +75,10 @@ export const useUserStore = create((set, get) => ({
             const {data} = await axios.get('auth/users')
             set({users : data.users })
             set({ loading: false})
-            console.log(data);
-            
+
         }catch(error){
             set({ loading: false })
-            console.log(error);
+          
             
             return toast.error('something wrong happened');
             
@@ -89,9 +88,9 @@ export const useUserStore = create((set, get) => ({
         const {users} = get()
         set({ loading: true })
         try { 
-            const {data} = axios.delete(`auth/users/${userId}`)
-            const userss = users.filter((user)=> user._id !== id)
-            set({ users : userss })
+            const {data} = await axios.delete(`auth/users/${id}`)
+       
+            set({ users : data.users })
         }catch(error){
             set({ loading: false })
             return toast.error('something wrong happened');
@@ -99,12 +98,12 @@ export const useUserStore = create((set, get) => ({
         }
     }, 
     updateRole : async (id , role) =>  {
-        const {users} = get()
+        const {users , getALLUsers} = get()
+        
         set({ loading: true})
         try { 
-            const {data} = axios.put(`auth/users/${userId}` , {role})
-            const userss = users.filter((user)=> user._id !== id)
-            set({ users : userss })
+            const {data} = await axios.put(`auth/users/${id}` , {role})
+            set({users : data.users})
             set({ loading: false})
         }catch(error){
             set({ loading: false })
@@ -125,7 +124,18 @@ export const useUserStore = create((set, get) => ({
         }
 
 
-    }
+    }, 
+    createProduct : async (dataform) => {
+        try{
+            set({loading : true})
+            await axios.post('products', dataform)
+            set({loading : false})
+            toast.success('created')
+        }catch(error){
+            set({ loading: false })
+            return toast.error(error.message);
+        }
+    } 
 
 
 }))

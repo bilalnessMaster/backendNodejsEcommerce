@@ -106,7 +106,8 @@ export const deleteUser = async (req, res) => {
         // 671d1abefd7aa02ee23031a9
         const user = await User.findByIdAndDelete(id)
         if (!user) return res.status(404).json({ message: "user not found" })
-        return res.status(200).json({ message: "user deleted succesfully" })
+        const users = await User.find({}, 'id email role firstName createdAt')
+        return res.status(200).json({ message: "user deleted succesfully" , users})
     } catch (error) {
         console.log('Error occurred while deleteUser the profile:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -138,10 +139,11 @@ export const updateUserRole = async (req, res) => {
         const user = await User.findById(id)
         user.role = role
         await user.save()
-        return res.status(200).json({ message: "user update succesfully" })
+        const users = await User.find({}, 'id email role firstName createdAt')
+        return res.status(200).json({ message: "user update succesfully" , users })
 
     } catch (error) {
-        console.log("error happend while updateUserRole" + error);
+        console.log("error happend while updateUserRole " + error);
         res.status(500).json({ error: 'Internal server error' });
     }
 
