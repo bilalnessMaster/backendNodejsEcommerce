@@ -125,17 +125,7 @@ export const useUserStore = create((set, get) => ({
 
 
     }, 
-    createProduct : async (dataform) => {
-        try{
-            set({loading : true})
-            await axios.post('products', dataform)
-            set({loading : false})
-            toast.success('created')
-        }catch(error){
-            set({ loading: false })
-            return toast.error(error.message);
-        }
-    } 
+  
 
 
 }))

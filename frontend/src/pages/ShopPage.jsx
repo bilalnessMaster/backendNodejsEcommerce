@@ -57,6 +57,8 @@ const ShopPage = () => {
       
       
   } , [filter])
+
+  
   return (
     <main className="max-w-screen-2xl mx-auto">
       <section className="container mx-auto">

@@ -2,14 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import RattingSystem from './RattingSystem'
 import { useCarteStore } from '../Stores/useCarteStore'
-const Card = ({id, image , rating , price  ,name , oldPrice}) => {
+const Card = ({_id, imageURL , rating , price  ,name , oldPrice}) => {
   const {addToCart} = useCarteStore()
   return (
     <article className='relative'>
     
-    <Link to={`/product/${id}`} className='relative '>
+    <Link to={`/product/${_id}`} className='relative '>
       <div>
-        <img src={image} alt=""  className='w-full h-64 max-h-96 object-cover'/>
+        <img src={imageURL} alt=""  className='w-full h-64 max-h-96 object-cover'/>
       </div>
       <div className='flex justify-between items-start py-1 '>
         <div>

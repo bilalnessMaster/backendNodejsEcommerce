@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useUserStore } from '../Stores/useUserStore'
 import Loader from './Loader'
+import { useProductStore } from '../Stores/useProductStore'
 const CreateProductsPanel = () => {
-  const {loading, createProduct} = useUserStore()
+  const {loading, createProduct} = useProductStore()
   const [isUpload  , setIsUpload] = useState(false)
   const [dataForm, setDataForm] = useState({
     name: '',

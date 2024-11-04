@@ -1,6 +1,7 @@
 import Product from "../lib/models/Product.model.js";
 import cloudinary  from "../lib/cloudinary/cloudinary.js";
 import Review  from '../lib/models/Review.model.js'
+
 export const getAllProducts = async (req, res) => {
     try {
         const { category, color, minPrice, maxPrice, page = 1 , limit = 10 } = req.query
@@ -93,7 +94,7 @@ export const getSingleProduct = async (req , res) => {
 
 
     }catch(error){
-        console.log('while getSingleProduct product', error);
+        console.log('while getSingleProduct product ', error);
         res.status(404).json({ error: "internal error in server" })
     }
 }
@@ -123,4 +124,20 @@ export const  relatedProducts = async (req ,res) =>{
     }
 }
 
+
+//  trending products 
+
+export const trendingProducts = async (req, res) => {
+    try {
+        
+        const trending  = await Product.find({trend : true})
+        if(!trending) return  res.status(404).json({error : "product not found"})
+        res.status(200).json({message : 'trending products' , trending })
+
+    }catch(error){
+        console.log('while getting related products ', error);
+        res.status(404).json({ error: "internal error in server" })
+   
+    }
+}
 

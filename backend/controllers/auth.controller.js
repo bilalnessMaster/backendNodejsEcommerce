@@ -1,3 +1,4 @@
+import cloudinary from '../lib/cloudinary/cloudinary.js'
 import User from '../lib/models/user.model.js'
 import jwt from 'jsonwebtoken'
 // {
@@ -155,12 +156,25 @@ export const updateUserRole = async (req, res) => {
 export const editProfile = async (req, res) => {
     try {
         const { firstName, lastName, bio, profileImage, profession  } = req.body
+        
+        let cloudinaryResponse = null
+        if(profileImage) { 
+                cloudinaryResponse = await cloudinary.uploader.upload(profileImage , {
+                    folder : 'users'
+                })
+        }
+        
         if (!req.user._id) return res.status(404).json({ message: "Id is required" })
-        const user = await User.findByIdAndUpdate(req.user._id, { firstName, lastName, bio, profileImage, profession  })
+        const user = await User.findByIdAndUpdate(req.user._id, { 
+        firstName,
+        lastName,
+        bio,
+        profileImage : cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : '', 
+        profession  })
         if (!user) return res.status(404).json({ message: "user not found" })
         return res.status(200).json({ message: "edited ! " })
     } catch (error) {
-        console.log("error happend while editProfile" + error);
+        console.log("error happend while editProfile " + error);
         res.status(500).json({ error: 'Internal server error' });
 
     }

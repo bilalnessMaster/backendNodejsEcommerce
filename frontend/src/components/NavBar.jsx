@@ -79,7 +79,7 @@ const NavBar = () => {
 const Menu=({isDrop}) =>{
   const {user , Logout } = useUserStore()
   return (
-    <div className="absolute right-1/2 capitalize bg-white drop-shadow-md px-1 w-40 rounded py-2 flex space-y-1 justify-center items-start flex-col  top-9 z-50">
+    <div className="absolute right-1/2 capitalize bg-white drop-shadow-md px-3 w-40 rounded py-2 flex space-y-1 justify-center items-start flex-col  top-9 z-50">
       <Link to="/profile" className="hover:bg-gray-100 rounded  py-1 w-full "><i className="ri-profile-line"></i> profile</Link>
       {user?.role === "admin" ? <Link to='/dashboard' className="hover:bg-gray-100 rounded  py-1 w-full "><i className="ri-dashboard-line"></i> Dashboard</Link> : null}
       <div className="border-separate border-gray-500"></div>

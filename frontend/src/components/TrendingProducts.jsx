@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
-import products from '../data/products'
+import React, { useEffect, useState } from 'react'
+// import products from '../data/products'
 import ProductsCards from '../components/ProductsCards'
+import { useProductStore } from '../Stores/useProductStore'
 const TrendingProducts = () => {
-  const [visible , setVisible] = useState(8)
 
+  const [visible , setVisible] = useState(8)
+  const {products , trendProducts } = useProductStore()
     const handleViewMore = () => {
         setVisible(prevState => prevState + 4)
     }
+  useEffect(()=>{
+    trendProducts()
+  },[trendProducts])
+  console.log(products);
+  
   return (
     <section className='container mx-auto flex flex-col items-center gap-12 mt-12 '>
      <div className='flex flex-col gap-2 items-center justify-center '>

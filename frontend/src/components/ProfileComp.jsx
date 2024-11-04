@@ -4,19 +4,19 @@ import {Link} from 'react-router-dom'
 import Loader from './Loader'
 const ProfileComp = () => {
     const {user , loading , getProfile , editProfile} = useUserStore()
-    const [dataForm, setDataForm] = useState({
-        email: 'Example@gmail.com',
-        password: '',
-        firstName: 'Jhon',
-        lastName: 'Smith', 
-        profession :'worker',
-        bio : '  ', 
-        profileImage : ''
-    })
-    
     useEffect(()=>{
         getProfile()
     },[getProfile])
+    
+    const [dataForm, setDataForm] = useState({
+        email: 'example@gmail.com' ,
+        firstName: 'jhom' ,
+        lastName: 'smith',
+        profession: 'student' ,
+        bio: 'write to know something about you'  ,
+        profileImage: '' 
+      })
+      
 
 
     useEffect(()=>{
@@ -28,17 +28,33 @@ const ProfileComp = () => {
                 lastName: user.lastName || '',
                 profession: user.profession || '',
                 bio: user.bio || '',
-                profileImage: 'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                profileImage: user?.profileImage || ''
             });
         }
     },[user])
+
+    // UPLOADING PROFILE IMAGE 
+    const handlefile = (e)=> { 
+      const file = e.target.files[0]
+      if(file){
+        const reader = new FileReader()
+
+        reader.onload = () => {
+           setDataForm({...dataForm , profileImage : reader.result })
+        }
+        reader.readAsDataURL(file)
+      }
+
+    }
+
+    // handle submit
+
     const handlesubmit = (e) => { 
         e.preventDefault();
         editProfile(dataForm)
     }
     if (loading || !user) return <Loader />;
     console.log(user);
-    
   return (
     <form onSubmit={handlesubmit} className=" w-full md:w-1/2 lg:w-1/3 xl:w-1/5 flex flex-col gap-2 items-start px-2 py-2">
     <h1 className="text-xl w-full text-start first-letter:capitalize mb-3 font-semibold ">update you profile </h1>
@@ -156,7 +172,7 @@ const ProfileComp = () => {
           name="profileImage"
           id="profileImage"
         
-          onChange={(e) => setDataForm({ ...dataForm, profileImage: e.target.value })}
+          onChange={handlefile}
           className="hidden "
          
         />
@@ -166,6 +182,10 @@ const ProfileComp = () => {
       </div>
       <span className="text-sm text-gray-400">image Profile</span>
     </label>
+    
+    
+    {/* bio  */}
+  
     <label
       htmlFor="bio"
       className=" flex flex-col w-full text-sm items-start justify-center gap-[0.1rem]  rounded   outline-none border-neutral-300  "

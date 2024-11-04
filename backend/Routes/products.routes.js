@@ -7,16 +7,17 @@ import {
     deleteProduct,
     getSingleProduct,
     relatedProducts,
+    trendingProducts
 
 } from '../controllers/products.controller.js';
 
 
 router.get('/', getAllProducts )
 router.post('/',protectedRoute, adminRoute, createProduct)
+router.get('/trend', trendingProducts)
+router.get('/related-products/:id', relatedProducts)
 router.delete('/:id',protectedRoute, adminRoute, deleteProduct)
 router.get('/:id', getSingleProduct)
-router.get('/related-products/:id', relatedProducts)
-
 
 
 export default router; 
