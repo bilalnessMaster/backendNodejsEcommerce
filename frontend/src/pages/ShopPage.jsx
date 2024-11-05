@@ -21,20 +21,28 @@ const ShopPage = () => {
       color: "all",
       priceRange: "",
     });
+
+
   const applyFilter = () => {
     let filteredProducts = products;
+    
     // filterage par categorie
     if (filter.category && filter.category !== "all") {
       filteredProducts = filteredProducts.filter(
         (product) => product.category === filter.category
       );
     }
+
+
     // filterage par couleur
     if (filter.color && filter.color !== "all") {
       filteredProducts = filteredProducts.filter(
         (product) => product.color === filter.color
       );
     }
+
+
+
     // filterage par prix min et max
     if (filter.priceRange && filter.priceRange !== "") {
       filteredProducts = filteredProducts.filter(
@@ -52,13 +60,15 @@ const ShopPage = () => {
       priceRange: "",
     })
   }
+  
+  //  
   useEffect(()=>{
         applyFilter()
       
       
   } , [filter])
 
-  
+
   return (
     <main className="max-w-screen-2xl mx-auto">
       <section className="container mx-auto">
@@ -74,8 +84,6 @@ const ShopPage = () => {
       <section className="container mx-auto flex mt-12">
         <div className="w-1/3">
             <FilterSystem  setFilter={setFilter} filter={filter} clearfilter={clearfilter}  filters={filters} /> 
-        
-        
         </div>
         <div className="flex flex-col gap-5 ">
         <h1 className="text-3xl">Products available {products.length}</h1>

@@ -12,7 +12,7 @@ const TrendingProducts = () => {
   useEffect(()=>{
     trendProducts()
   },[trendProducts])
-  console.log(products);
+
   
   return (
     <section className='container mx-auto flex flex-col items-center gap-12 mt-12 '>

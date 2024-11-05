@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useCarteStore } from '../Stores/useCarteStore'
 
-const CartCard = ({index , id ,name, image , price  , quantity , }) => {
-    const {cartItems ,RemoveFromCarte , updateQuantity} = useCarteStore()
+const CartCard = ({index , id ,name, imageURL , price  , quantity , }) => {
+    const { RemoveFromCarte , updateQuantity} = useCarteStore()
 
   return (
     <article className='h-[80px] flex items-center justify-between px-2 py-2 bg-gray-100/85 rounded drop-shadow-sm '>
@@ -12,7 +12,7 @@ const CartCard = ({index , id ,name, image , price  , quantity , }) => {
      </div>
         
             <div className=''>
-            <img src={image} className='h-[60px] w-[60px]  object-cover' alt="" />
+            <img src={imageURL} className='h-[60px] w-[60px]  object-cover' alt="" />
             </div>
             <div>
                 <h1>{name}</h1>

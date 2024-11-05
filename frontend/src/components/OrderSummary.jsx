@@ -20,7 +20,7 @@ const OrderSummary = () => {
         <h1><span className='text-black/75 capitalize'>grand total</span> : ${grandTotal} </h1>
         </div>
       <div>
-        <button className='w-full py-2 flex items-center gap-1 justify-center bg-yellow-500 font-semibold rounded-sm'><i class="ri-money-dollar-circle-fill text-2xl"></i> Checkout the payment</button>
+        <button className='w-full py-2 flex items-center gap-1 justify-center bg-yellow-500 font-semibold rounded-sm'><i className="ri-money-dollar-circle-fill text-2xl"></i> Checkout the payment</button>
       </div>
       </div>
     </div>

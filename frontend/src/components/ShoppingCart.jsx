@@ -6,10 +6,10 @@ import CartCard from './CartCard'
 import OrderSummary from './OrderSummary'
 const ShoppingCart = ({isOpen , setIsOpen}) => {
     const [items , setItems] = useState([])
-    const {cartItems , Cartshoping} = useCarteStore()
+    const {cartItems , getItemsCart} = useCarteStore()
     
 
-    if (!items) {
+    if (!cartItems) {
         return <div>Loading...</div>;
     }
    
@@ -18,13 +18,11 @@ const ShoppingCart = ({isOpen , setIsOpen}) => {
   
         
        
-        setItems(cartItems)
+        getItemsCart()
 
         
         
-    },[cartItems])
-    
-
+    },[getItemsCart])
   return (
     <motion.div 
     initial={{
@@ -45,9 +43,9 @@ const ShoppingCart = ({isOpen , setIsOpen}) => {
             </div>
             <div className='flex flex-col gap-2'>
 
-        {items.length > 0 ?
-            items.map((ele,index) => (
-                <CartCard key={ele.id} index={index} {...ele} />
+        {cartItems.length > 0 ?
+            cartItems.map((ele,index) => (
+                <CartCard key={ele._id} index={index} {...ele} />
             )) : <div className='w-full h-[500px] flex flex-col items-center justify-center'>
              <i className="ri-shopping-bag-line text-xl"></i>   
                  <span>Cart is empty</span>

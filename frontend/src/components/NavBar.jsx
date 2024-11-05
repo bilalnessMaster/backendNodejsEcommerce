@@ -10,7 +10,7 @@ const NavBar = () => {
   const {user } = useUserStore()
   const {cartItems} = useCarteStore()
   const [isDrop  , setIsDrop] = useState(false)
-  console.log(user);
+
   return (
     
 <>
@@ -64,7 +64,7 @@ const NavBar = () => {
             </button>
           </span>
           <span>
-          { user && user ? <div className="relative w-fit"> <img src={user?.profileImage || avatar } onClick={()=>setIsDrop(!isDrop)} className="h-7 w-7 cursor-pointer rounded-full object-cover" alt="" srcset="" /> {isDrop ?<Menu />:""} </div> :  <Link to="/login">
+          { user && user ? <div className="relative w-fit"> <img src={user?.profileImage || avatar } onClick={()=>setIsDrop(!isDrop)} className="h-7 w-7 cursor-pointer rounded-full object-cover" alt=""  /> {isDrop ?<Menu />:""} </div> :  <Link to="/login">
               <i className="ri-user-line"></i>
             </Link>}
           </span>
