@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../components/Footer";
-import products from "../data/products";
+
 import ProductsCards from "../components/ProductsCards";
 import FilterSystem from "../components/FilterSystem";
+import { useProductStore } from "../Stores/useProductStore";
 const filters = {
-  categories: ["all", "dress", "accessisories", "jewellery", "cosmetics"],
+  categories: ["all", "Dress collection", "accessisories", "Jewellery", "cosmetics"],
   colors: ["black", "white", "red", "purple", 'gold' , 'blue'],
   priceRange: [
     { label: "under $50", min: 0, max: 50 },
@@ -15,60 +15,38 @@ const filters = {
 };
 
 const ShopPage = () => {
-  const [Products, setProducts] = useState(products);
+  const {getProducts , products , totalePage} = useProductStore()
+  const [pagination , setPagination]  = useState(1)
     const [filter, setFilter] = useState({
       category: "all",
       color: "all",
       priceRange: "",
+      page : pagination
     });
 
 
-  const applyFilter = () => {
-    let filteredProducts = products;
-    
-    // filterage par categorie
-    if (filter.category && filter.category !== "all") {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category === filter.category
-      );
-    }
 
-
-    // filterage par couleur
-    if (filter.color && filter.color !== "all") {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.color === filter.color
-      );
-    }
-
-
-
-    // filterage par prix min et max
-    if (filter.priceRange && filter.priceRange !== "") {
-      filteredProducts = filteredProducts.filter(
-        (product) =>
-          product.price >= filter.priceRange.min &&
-          product.price <= filter.priceRange.max
-      );
-    }
-    setProducts(filteredProducts);
-  };
   const clearfilter = ()=>{
     setFilter({
       category: "all",
       color: "all",
-      priceRange: "",
+      min: 0,
+      max: 0,
+      page : pagination ,
     })
   }
   
-  //  
-  useEffect(()=>{
-        applyFilter()
-      
-      
-  } , [filter])
-
-
+  //  here with try to fetch data base on filter and pagination
+  useEffect(()=> {
+      setFilter({...filter , page : pagination})
+  },[pagination])
+  
+  useEffect(()=>{    
+    getProducts(filter)
+    
+  } , [filter ])
+  
+  if(!products) return 'loading ..'
   return (
     <main className="max-w-screen-2xl mx-auto">
       <section className="container mx-auto">
@@ -87,7 +65,14 @@ const ShopPage = () => {
         </div>
         <div className="flex flex-col gap-5 ">
         <h1 className="text-3xl">Products available {products.length}</h1>
-        <ProductsCards products={Products} />
+        <ProductsCards products={products} />
+        <div className="flex justify-center items-center gap-2 ">
+        {products.length > 0 && Array.from({ length: totalePage }, (_, index) => (
+            <button  className="  border-2 aspect-square border-rose-500 px-4 text-lg rounded py-2" key={index} onClick={() => setPagination(index+1)}>
+              {index + 1}
+            </button>
+          ))}
+        </div>
         </div>
       </section>
      
@@ -96,3 +81,62 @@ const ShopPage = () => {
 };
 
 export default ShopPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const applyFilter = () => {
+//   let filteredProducts = products;
+  
+//   // filterage par categorie
+//   if (filter.category && filter.category !== "all") {
+//     filteredProducts = filteredProducts.filter(
+//       (product) => product.category === filter.category
+//     );
+//   }
+
+
+//   // filterage par couleur
+//   if (filter.color && filter.color !== "all") {
+//     filteredProducts = filteredProducts.filter(
+//       (product) => product.color === filter.color
+//     );
+//   }
+
+
+
+//   // filterage par prix min et max
+//   if (filter.priceRange && filter.priceRange !== "") {
+//     filteredProducts = filteredProducts.filter(
+//       (product) =>
+//         product.price >= filter.priceRange.min &&
+//         product.price <= filter.priceRange.max
+//     );
+//   }
+//   setProducts(filteredProducts);
+// };

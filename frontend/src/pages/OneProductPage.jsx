@@ -8,9 +8,8 @@ import { useProductStore } from "../Stores/useProductStore";
 const OneProductPage = () => {
   const {getSingleProduct , singleProduct}  =useProductStore()
   const { id } = useParams();
-  console.log(id);
-  
-  const { cartItems, TotalPrice, calculateTotal, addToCart } = useCarteStore();
+ 
+  const {addToCart } = useCarteStore();
 
   // useEffect(() => {
   //   const foundProduct = products.find((item) => item.id == id);
@@ -26,10 +25,11 @@ const OneProductPage = () => {
     window.scroll(0, 0);
   }, []);
 
-  const setCartItem = (id, quantity) => {
+  const setCartItem = (id) => {
+    console.log(id);
+    
     if (singleProduct) {
-      addToCart(id, quantity);
-      console.log("Added to cart:", cartItems, TotalPrice);
+      addToCart(id);
     }
   };
   
@@ -38,7 +38,7 @@ const OneProductPage = () => {
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
-  console.log(singleProduct);
+
   return (
    
     <main className="max-w-screen-2xl mx-auto space-y-12">
@@ -73,9 +73,9 @@ const OneProductPage = () => {
               <h1 className="font-semibold text-4xl font-play"> {singleProduct.name}</h1>
                
                 <h1 className="font-semibold text-3xl">${singleProduct.price}</h1>
-                {singleProduct.oldPrice !== 0 && (
-                  <p className="font-medium text-2xl">
-                    <span className="line-through text-gray-600/65">
+                {singleProduct?.oldPrice !== 0 && (
+                  <p className="hidden md:blockfont-medium text-2xl">
+                    <span className=" line-through text-gray-600/65">
                       ${singleProduct.oldPrice}
                     </span>
                   </p>
@@ -104,7 +104,7 @@ const OneProductPage = () => {
             </div>
             <div>
               <button
-                onClick={() => setCartItem(singleProduct, 1)}
+                onClick={() => setCartItem(singleProduct._id)}
                 className="text-3xl bg-red-400   px-4 py-2 rounded mb-2 text-red-900"
               >
                 Add to Cart

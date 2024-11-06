@@ -9,6 +9,7 @@ export const useProductStore = create((set, get)=>(
         products : [],
         singleProduct : {} , 
         loading : false , 
+        totalePage : 1,
         
         createProduct : async (dataform) => {
             try{
@@ -46,7 +47,24 @@ export const useProductStore = create((set, get)=>(
                 }catch(error){
                     return toast.error(error.message);
                 }
-        }
+        },
+        
+        // get products with pagination  
+
+        getProducts : async (filter)=> {
+            try{
+                console.log(filter);
+                
+                
+                const {data} = await axios.get(`products?category=${filter.category}&color=${filter.color}&page=${filter.page}&min=${filter.priceRange.min}&min=${filter.priceRange.max}` )
+                set({products: data.products , totalePage : data.totalePage})
+
+
+            }catch(error){
+                return toast.error(error.message);
+            }
+
+         }
     
     }
 ))

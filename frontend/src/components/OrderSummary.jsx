@@ -5,7 +5,7 @@ const OrderSummary = () => {
     const {TotalPrice,
         tax,
         taxRate,
-        grandTotal , clearCart , processPayment ,calculateTotal ,cartItems} = useCarteStore()
+        } = useCarteStore()
 
        
 
@@ -17,7 +17,7 @@ const OrderSummary = () => {
         <h1 className='w-full  text-gray-600  text-sm'><span className='font-medium'>tax rate</span> : {taxRate} </h1>
         </div>
         <div className='bg-gray-200/55 text-green-500 px-2 py-2 rounded-sm' >
-        <h1><span className='text-black/75 capitalize'>grand total</span> : ${grandTotal} </h1>
+        <h1><span className='text-black/75 capitalize'>grand total</span> : ${TotalPrice*taxRate + TotalPrice} </h1>
         </div>
       <div>
         <button className='w-full py-2 flex items-center gap-1 justify-center bg-yellow-500 font-semibold rounded-sm'><i className="ri-money-dollar-circle-fill text-2xl"></i> Checkout the payment</button>

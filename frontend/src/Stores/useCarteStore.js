@@ -14,11 +14,11 @@ export const useCarteStore = create((set, get) => ({
   addToCart: async (id) => {
     const { cartItems, calculateTotal, TotalPrice } = get();   
     try {
-      const {data} = await axios.put('cart' ,id)
+      const {data} = await axios.put('cart' ,{id})
       if(data.message) toast.success(data.message)
     } catch (error) {
       console.log(error);
-      toast.error(data.error)
+  
     }
   },
 
@@ -27,61 +27,34 @@ export const useCarteStore = create((set, get) => ({
   getItemsCart : async () =>{ 
     try{
       const {data} = await axios.get('cart')
-      set({cartItems : data.items})
+      set({cartItems : data.items , TotalPrice : data.totalprice})
 
     }catch(error){
       console.log(error);
       // toast.error(data.error)
     }
   },
+
+  // remove  product from cart
+
   RemoveFromCarte: async (id) => {
-    console.log(id);
-    const { cartItems, calculateTotal } = get();
-
+    const { cartItems,getItemsCart, calculateTotal } = get();
     try {
-      const cart = cartItems.find((item) => item.id == id);
-
-      if (cart) {
-        let newItems = cartItems.filter((item) => item.id !== id);
-
-        set({ cartItems: newItems });
-        toast.error("products has been  removed", { id: "once" });
-      }
-      calculateTotal();
+      const {data} = await axios.delete(`cart/${id}`)
+      getItemsCart()
+      if(data.message) toast.success(data.message)
     } catch (error) {
       console.log(error);
     }
   },
-  calculateTotal: async () => {
-    const { cartItems } = get();
-    let priceTotal = 0;
-    cartItems.map((item) => {
-      const cart = products.find((product) => product.id == item.id);
-
-      if (cart) {
-        priceTotal += cart.price * item.quantity;
-      }
-    });
-    let taxRate = 0.05  
-    let grandTotal =priceTotal+ (  priceTotal * taxRate) 
-    set({ TotalPrice:Math.round( priceTotal) , grandTotal : Math.round(grandTotal)  });
-  },
   updateQuantity: async (id, quantity) => {
-    const { cartItems, RemoveFromCarte ,calculateTotal } = get();
-
+    const { cartItems, RemoveFromCarte, getItemsCart ,calculateTotal } = get();
+          console.log(id , quantity);
+          
     try {
-      let item = cartItems.find((item) => item.id === id);
-      if (!item) return toast.error("does not exist in shopping cart");
-      if (item.quantity + quantity <= 0) {
-        
-          RemoveFromCarte(id);
-      
-      } else {
-        item.quantity += quantity;
-        set({ cartItems: cartItems });
-        console.log(cartItems);
-        calculateTotal()
-      }
+          const {data}= await axios.patch('cart' , {id , quantity})
+          getItemsCart()
+          if(data.message) toast.success(data.message , {id : "once"})
     } catch (error) {
       console.log(error);
     }

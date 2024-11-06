@@ -20,7 +20,7 @@ const Card = ({_id, imageURL , rating , price  ,name , oldPrice}) => {
       </div>
       
     </Link>
-    <button onClick={()=>addToCart({id, image , rating , price  ,name , oldPrice} , 0)} className='absolute top-2 right-2 '>
+    <button onClick={()=>addToCart(_id)} className='absolute top-2 right-2 '>
         <i className="ri-shopping-cart-line text-xl bg-red-500 p-1 rounded-md text-white "></i>
       </button>
     </article>

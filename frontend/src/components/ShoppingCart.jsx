@@ -23,6 +23,8 @@ const ShoppingCart = ({isOpen , setIsOpen}) => {
         
         
     },[getItemsCart])
+
+    
   return (
     <motion.div 
     initial={{

@@ -4,8 +4,9 @@ import Review  from '../lib/models/Review.model.js'
 
 export const getAllProducts = async (req, res) => {
     try {
-        const { category, color, minPrice, maxPrice, page = 1 , limit = 10 } = req.query
-     
+        const { category, color,min ,max , page=1, limit = 8 } = req.query
+
+        
         const filter = {}
         if (category && category !== 'all') {
             filter.category = category
@@ -13,9 +14,9 @@ export const getAllProducts = async (req, res) => {
         if (color && color !== 'all') {
             filter.color = color
         }
-        if (minPrice && maxPrice) {
-            const min = parseFloat(minPrice)
-            const max = parseFloat(maxPrice)
+        if (min && max) {
+            let min = parseFloat(min)
+            let max = parseFloat(max)
             if (!isNaN(min) && !isNaN(max)) {
                 filter.price = { $gte: min, $lte: max }
             }
