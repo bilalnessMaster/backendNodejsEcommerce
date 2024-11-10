@@ -8,11 +8,12 @@ import { useUserStore } from "../Stores/useUserStore";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {user } = useUserStore()
-  const {cartItems} = useCarteStore()
+  const {cartItems , getItemsCart} = useCarteStore()
   const [isDrop  , setIsDrop] = useState(false)
-
-  return (
-    
+useEffect(()=>{
+  getItemsCart()
+},[getItemsCart , cartItems])
+  return (  
 <>
     <header className=" top-0 max-w-screen-2xl mx-auto py-4 text-lg ">
       <nav className="container  mx-auto flex items-center justify-between ">

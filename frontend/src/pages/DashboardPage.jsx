@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import UsersPanel from '../components/UsersPanel'
 import CreateProductsPanel from '../components/CreateProductsPanel'
 import OrdersPanel from '../components/OrdersPanel'
+import ProductDisplay from '../components/ProductDisplay'
 const DashboardPage = () => {
     const [isOpen , setIsOpen] = useState('create')
   return (
@@ -16,7 +17,8 @@ const DashboardPage = () => {
             <ul className='w-full flex flex-col gap-1 bg-gray'>
                 <li onClick={()=>setIsOpen('create')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-profile-line text-xl"></i> Create product</li>
                 <li onClick={()=>setIsOpen('orders')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-list-ordered text-xl"></i> Orders</li>
-                <li onClick={()=>setIsOpen('users')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-bank-card-line text-xl"></i> users</li>
+                <li onClick={()=>setIsOpen('users')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-bank-card-line text-xl"></i> Users</li>
+                <li onClick={()=>setIsOpen('products')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-bank-card-line text-xl"></i> Products</li>
             </ul>
         </div>
         <div className='flex-grow pt-16'>
@@ -24,6 +26,7 @@ const DashboardPage = () => {
                 {isOpen === 'users' && <UsersPanel />}
                 {isOpen === 'create' && <CreateProductsPanel />}
                 {isOpen === 'orders' && <OrdersPanel />}
+                {isOpen === 'products' && <ProductDisplay />}
 
             </div>
         </div>

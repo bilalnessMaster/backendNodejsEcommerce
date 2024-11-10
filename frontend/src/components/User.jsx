@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { useUserStore } from '../Stores/useUserStore'
-const User = ({firstName , email , _id , role , createdAt}) => {
+const User = ({pagination  , firstName , email , _id , role , createdAt}) => {
     const {updateRole ,  deleteUser} = useUserStore()
   return (
     <tr className='border-t  '>
@@ -23,7 +23,7 @@ const User = ({firstName , email , _id , role , createdAt}) => {
         </td>
         <td className='px-3'>
             
-        <button className='text-red-600 border-b-2 border-red-600' onClick={()=>deleteUser(_id)}>
+        <button className='text-red-600 border-b-2 border-red-600' onClick={()=>deleteUser(_id ,pagination )}>
             Delete
         </button>
         

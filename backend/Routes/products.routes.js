@@ -7,7 +7,8 @@ import {
     deleteProduct,
     getSingleProduct,
     relatedProducts,
-    trendingProducts
+    trendingProducts,
+    setProductTrend
 
 } from '../controllers/products.controller.js';
 
@@ -18,6 +19,6 @@ router.get('/trend', trendingProducts)
 router.get('/related-products/:id', relatedProducts)
 router.delete('/:id',protectedRoute, adminRoute, deleteProduct)
 router.get('/:id', getSingleProduct)
-
+router.put('/', protectedRoute, adminRoute, setProductTrend)
 
 export default router; 

@@ -30,8 +30,7 @@ const ShopPage = () => {
     setFilter({
       category: "all",
       color: "all",
-      min: 0,
-      max: 0,
+      priceRange: "",
       page : pagination ,
     })
   }

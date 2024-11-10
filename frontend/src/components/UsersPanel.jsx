@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useUserStore } from '../Stores/useUserStore'
 import User from './User'
 
 const UsersPanel = () => {
-    const {getALLUsers , users} = useUserStore()
+    const {getALLUsers , users  ,totalUser ,totalPage} = useUserStore()
+    const [pagination , setPagination] = useState(1)
     useEffect(()=>{
-        getALLUsers()
-    },[getALLUsers])
-
+        getALLUsers(pagination)
+    },[getALLUsers , pagination])
+    
     if(!users) return 'loading'
     // console.log(users);
     
@@ -29,12 +30,19 @@ const UsersPanel = () => {
                     <tbody>
                   
                     {users && users.map((user)=> (
-                        <User key={user._id} {...user} />
+                        <User key={user._id} pagination={pagination} {...user} />
                     ))}
                 
                     </tbody>
                 </table>
 
+            </div>
+            <div className='h-20 w-full flex justify-center items-center gap-2'>
+                {users && Array.from({length : totalPage} , ( _ , index)=> {
+                    return (
+                        <button onClick={()=> setPagination(index+1)} key={index} className='border  bg-gray-50 w-9 rounded h-9'>{index+1}</button>
+                    )
+                })}
             </div>
 
         </main>

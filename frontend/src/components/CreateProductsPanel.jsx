@@ -24,8 +24,7 @@ const CreateProductsPanel = () => {
               setDataForm({...dataForm , imageURL : reader.result})
             }
             reader.readAsDataURL(file)
-        }
-       
+        }      
   }
 
   const hanldeSubmit  = async (e) => {

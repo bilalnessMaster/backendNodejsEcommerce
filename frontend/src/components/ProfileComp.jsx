@@ -54,7 +54,7 @@ const ProfileComp = () => {
         editProfile(dataForm)
     }
     if (loading || !user) return <Loader />;
-    console.log(user);
+
   return (
     <form onSubmit={handlesubmit} className=" w-full md:w-1/2 lg:w-1/3 xl:w-1/5 flex flex-col gap-2 items-start px-2 py-2">
     <h1 className="text-xl w-full text-start first-letter:capitalize mb-3 font-semibold ">update you profile </h1>

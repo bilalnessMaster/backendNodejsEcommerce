@@ -4,8 +4,8 @@ import Review  from '../lib/models/Review.model.js'
 
 export const getAllProducts = async (req, res) => {
     try {
-        const { category, color,min ,max , page=1, limit = 8 } = req.query
-
+        const { category, color,min,max, page=1, limit = 8 } = req.query
+        console.log(category);
         
         const filter = {}
         if (category && category !== 'all') {
@@ -15,10 +15,10 @@ export const getAllProducts = async (req, res) => {
             filter.color = color
         }
         if (min && max) {
-            let min = parseFloat(min)
-            let max = parseFloat(max)
+            let minm = parseFloat(min)
+            let maxm = parseFloat(max)
             if (!isNaN(min) && !isNaN(max)) {
-                filter.price = { $gte: min, $lte: max }
+                filter.price = { $gte: minm, $lte: maxm }
             }
         }
         let skip = (page - 1) * limit
@@ -27,6 +27,7 @@ export const getAllProducts = async (req, res) => {
         const totalePage = Math.ceil(totaleProducts/parseInt(limit))
         const productsfilter = await Product.find(filter).skip(skip).limit(parseInt(limit)).sort({createdAt : -1})
 
+        
         res.status(200).json({products : productsfilter , totalePage : totalePage , totaleProducts :totaleProducts })
     } catch (error) {
         console.log('while getting all product', error);
@@ -139,6 +140,22 @@ export const trendingProducts = async (req, res) => {
         console.log('while getting related products ', error);
         res.status(404).json({ error: "internal error in server" })
    
+    }
+}
+
+// make product trend 
+
+export const setProductTrend = async (req ,res ) =>{
+    try{
+        const {id} = req.body
+        const product  = await Product.findById(id )     
+        product.trend = !product.trend
+        await product.save()   
+        res.status(200).json({message : 'set it to true or false'  })
+
+    }catch(error){
+        console.log(error);
+        
     }
 }
 

@@ -9,6 +9,8 @@ export const useUserStore = create((set, get) => ({
     loading: false,
     chechAuth: false,
     users : [],
+    totalPage : 1 ,
+    totalUser : 1 , 
     // api for register 
     Register: async (User) => {
         set({ loading: true })
@@ -69,11 +71,11 @@ export const useUserStore = create((set, get) => ({
             return toast.error('something wrong happened');
         }
     },
-    getALLUsers : async () =>  {
+    getALLUsers : async (pagination) =>  {
         try { 
             set({ loading: true})
-            const {data} = await axios.get('auth/users')
-            set({users : data.users })
+            const {data} = await axios.get(`auth/users?page=${pagination}`)
+            set({users : data.users  , totalPage : data.totalPage  ,totalUser: data.totalUser})
             set({ loading: false})
 
         }catch(error){
@@ -84,13 +86,12 @@ export const useUserStore = create((set, get) => ({
             
         }
     }, 
-    deleteUser : async (id) =>  {
-        const {users} = get()
+    deleteUser : async (id ,pagination) =>  {
+        const {users , getALLUsers} = get()
         set({ loading: true })
         try { 
-            const {data} = await axios.delete(`auth/users/${id}`)
-       
-            set({ users : data.users })
+             await axios.delete(`auth/users/${id}`)
+           getALLUsers(pagination)
         }catch(error){
             set({ loading: false })
             return toast.error('something wrong happened');

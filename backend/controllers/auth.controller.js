@@ -115,15 +115,16 @@ export const deleteUser = async (req, res) => {
     }
 }
 
-// we will use it for display the users and update them 
+// get all users we will use it for display the users and update them 
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}, 'id email role firstName createdAt')
-
-        res.status(200).json({ users })
-
-
+        const {limit = 8 , page=1 } = req.query
+        let skip = (page-1)*limit
+        const totalUser = await User.countDocuments()
+        const totalPage = Math.ceil(totalUser/limit)
+        const users = await User.find({}, 'id email role firstName createdAt').skip(skip).limit(limit).sort({createdAt : -1})
+        res.status(200).json({ users , totalUser , totalPage  })
     } catch (error) {
         console.log("error happend while getting all users" + error);
         res.status(500).json({ error: 'Internal server error' });

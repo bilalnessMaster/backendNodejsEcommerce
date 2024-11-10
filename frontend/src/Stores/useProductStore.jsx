@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import axios from '../lib/axios'
 import toast from 'react-hot-toast';
+import { Axios } from 'axios';
 
 
 
@@ -53,10 +54,10 @@ export const useProductStore = create((set, get)=>(
 
         getProducts : async (filter)=> {
             try{
-                console.log(filter);
+      
                 
                 
-                const {data} = await axios.get(`products?category=${filter.category}&color=${filter.color}&page=${filter.page}&min=${filter.priceRange.min}&min=${filter.priceRange.max}` )
+                const {data} = await axios.get(`products?category=${filter?.category || '' }&color=${filter?.color || ''}&page=${filter?.page}&max=${filter?.priceRange?.max || ''}&min=${filter?.priceRange?.min || ''}` )
                 set({products: data.products , totalePage : data.totalePage})
 
 
@@ -64,6 +65,17 @@ export const useProductStore = create((set, get)=>(
                 return toast.error(error.message);
             }
 
+         },
+         setTrend : async (id ,pagination) => { 
+            try{ 
+                const {getProducts} = get()
+                const {data} = await axios.put('products', {id})
+                getProducts(pagination)
+                return toast.error(data.message);
+            }catch(error){
+                return toast.error(error.message);
+
+            }
          }
     
     }
