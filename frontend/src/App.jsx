@@ -12,10 +12,7 @@ import { useUserStore } from './Stores/useUserStore'
 function App() {
   const {cartITtems}= useCarteStore()
   const {user , getProfile} = useUserStore()
-  useEffect(()=>{
-      
 
-  } , [cartITtems])
   useEffect(()=>{
     getProfile()
 

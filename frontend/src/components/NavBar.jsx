@@ -7,12 +7,14 @@ import avatar from '../assets/avatar.png'
 import { useUserStore } from "../Stores/useUserStore";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {user } = useUserStore()
+  const { user } = useUserStore()
   const {cartItems , getItemsCart} = useCarteStore()
   const [isDrop  , setIsDrop] = useState(false)
 useEffect(()=>{
-  getItemsCart()
-},[getItemsCart , cartItems])
+  if(user) {
+    getItemsCart()
+  }
+},[])
   return (  
 <>
     <header className=" top-0 max-w-screen-2xl mx-auto py-4 text-lg ">

@@ -53,7 +53,7 @@ export const useUserStore = create((set, get) => ({
     Logout : async ( )=>  {
         try { 
             
-            const {data} = axios.get('auth/logout')
+            const {data} = await axios.get('auth/logout')
             set({ user : null  , })
         }catch(error){
        

@@ -6,10 +6,10 @@ import category4 from "../assets/category-4.jpg";
 import { Link } from "react-router-dom";
 import CardCategory from "./CardCategory";
 const categories = [
-  { name: "Accessories", path: "accessories", img: category1 },
-  { name: "Dress collection", path: "dress", img: category2 },
-  { name: "Jewellery", path: "jewellery", img: category3 },
-  { name: "Cosmetics", path: "cosmetics", img: category4 },
+  { name: "Accessories", path: "Accessories", img: category1 },
+  { name: "Dress collection", path: "Dress collection", img: category2 },
+  { name: "Jewellery", path: "Jewellery", img: category3 },
+  { name: "Cosmetics", path: "Cosmetics", img: category4 },
 ];
 const Categories = () => {
   return (

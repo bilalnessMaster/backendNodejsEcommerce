@@ -67,7 +67,7 @@ const ShopPage = () => {
         <ProductsCards products={products} />
         <div className="flex justify-center items-center gap-2 ">
         {products.length > 0 && Array.from({ length: totalePage }, (_, index) => (
-            <button  className="  border-2 aspect-square border-rose-500 px-4 text-lg rounded py-2" key={index} onClick={() => setPagination(index+1)}>
+            <button  className="  border-2 aspect-square border-rose-500 w-10 text-lg rounded " key={index} onClick={() => setPagination(index+1)}>
               {index + 1}
             </button>
           ))}

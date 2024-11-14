@@ -8,21 +8,15 @@ const ShoppingCart = ({isOpen , setIsOpen}) => {
     const [items , setItems] = useState([])
     const {cartItems , getItemsCart} = useCarteStore()
     
+    
+     useEffect(()=>{        
+         getItemsCart()
+   
+     },[getItemsCart])
 
     if (!cartItems) {
         return <div>Loading...</div>;
     }
-   
-    useEffect(()=>{
-        
-  
-        
-       
-        getItemsCart()
-
-        
-        
-    },[getItemsCart])
 
     
   return (

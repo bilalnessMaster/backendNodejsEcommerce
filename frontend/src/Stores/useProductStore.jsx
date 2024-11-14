@@ -1,7 +1,8 @@
 import {create} from 'zustand';
 import axios from '../lib/axios'
 import toast from 'react-hot-toast';
-import { Axios } from 'axios';
+
+
 
 
 
@@ -71,10 +72,31 @@ export const useProductStore = create((set, get)=>(
                 const {getProducts} = get()
                 const {data} = await axios.put('products', {id})
                 getProducts(pagination)
-                return toast.error(data.message);
+                return toast.success(data.message);
             }catch(error){
                 return toast.error(error.message);
 
+            }
+         }, 
+         DeleteProduct : async (id , pagination) => { 
+            try{
+                const {getProducts} = get()
+                const {data} = await axios.delete(`products/${id}`)
+                getProducts(pagination)
+                return toast.success(data.message);
+
+            }catch(error){
+                return toast.error(error.message);
+            }
+         },
+         searchEgine : async (searchWords) =>{
+            console.log(searchWords);
+            
+            try{
+                const {data} = await axios.get(`products/search?searchWords=${searchWords}`)
+                set({products : data.products})
+            }catch(error){
+                return toast.error(error.message);
             }
          }
     

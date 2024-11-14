@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.post('/register', authRegister)
 router.post('/login', authLogin)
-router.post('/logout',protectedRoute, authLogout)
+router.get('/logout',protectedRoute, authLogout)
 router.get('/profile',protectedRoute, getProfile)
 router.delete('/users/:id',protectedRoute , adminRoute, deleteUser)
 router.get('/users',protectedRoute , adminRoute, getAllUsers)

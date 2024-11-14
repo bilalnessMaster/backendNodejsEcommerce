@@ -1,12 +1,10 @@
 import Product from "../lib/models/Product.model.js";
-import cloudinary  from "../lib/cloudinary/cloudinary.js";
-import Review  from '../lib/models/Review.model.js'
+import cloudinary from "../lib/cloudinary/cloudinary.js";
+import Review from '../lib/models/Review.model.js'
 
 export const getAllProducts = async (req, res) => {
     try {
-        const { category, color,min,max, page=1, limit = 8 } = req.query
-        console.log(category);
-        
+        const { category, color, min, max, page = 1, limit = 8 } = req.query
         const filter = {}
         if (category && category !== 'all') {
             filter.category = category
@@ -24,11 +22,11 @@ export const getAllProducts = async (req, res) => {
         let skip = (page - 1) * limit
 
         const totaleProducts = await Product.countDocuments(filter)
-        const totalePage = Math.ceil(totaleProducts/parseInt(limit))
-        const productsfilter = await Product.find(filter).skip(skip).limit(parseInt(limit)).sort({createdAt : -1})
+        const totalePage = Math.ceil(totaleProducts / parseInt(limit))
+        const productsfilter = await Product.find(filter).skip(skip).limit(parseInt(limit)).sort({ createdAt: -1 })
 
-        
-        res.status(200).json({products : productsfilter , totalePage : totalePage , totaleProducts :totaleProducts })
+
+        res.status(200).json({ products: productsfilter, totalePage: totalePage, totaleProducts: totaleProducts })
     } catch (error) {
         console.log('while getting all product', error);
         res.status(404).json({ error: "internal error in server" })
@@ -41,11 +39,11 @@ export const createProduct = async (req, res) => {
     try {
         let cloudinaryResponse = null
         const { name, category, oldPrice, price, imageURL, color, description } = req.body
-        
-        if(imageURL) { 
+
+        if (imageURL) {
             cloudinaryResponse = await cloudinary.uploader.upload(imageURL, {
                 folder: "products",
-              })
+            })
         }
 
         const product = await Product.create({
@@ -86,16 +84,16 @@ export const deleteProduct = async (req, res) => {
 
 // get  single product 
 
-export const getSingleProduct = async (req , res) => {
-    try{
-        const {id} = req.params 
+export const getSingleProduct = async (req, res) => {
+    try {
+        const { id } = req.params
         const product = await Product.findById(id)
-        const review = await Review.find({productId : id}).populate('userId' , ['firstName' , 'profileImage'])
-        if(!product) return res.status(404).json({error : 'product not found'})
-        return res.status(200).json({message : 'product found' , product : product, reviews : review})
+        const review = await Review.find({ productId: id }).populate('userId', ['firstName', 'profileImage'])
+        if (!product) return res.status(404).json({ error: 'product not found' })
+        return res.status(200).json({ message: 'product found', product: product, reviews: review })
 
 
-    }catch(error){
+    } catch (error) {
         console.log('while getSingleProduct product ', error);
         res.status(404).json({ error: "internal error in server" })
     }
@@ -104,23 +102,23 @@ export const getSingleProduct = async (req , res) => {
 
 // related products from
 
-export const  relatedProducts = async (req ,res) =>{
-    try  {
-            const {id} = req.params
-            const product = await Product.findById(id)
-            if(!product) return res.status(404).json({error : "product not found"})
-            let titleReg = new RegExp(product.name.split(' ').filter(word => word.length > 1).join('|'))
-            const products = await Product.find({
-                _id : {
-                    $ne : id
-                }, 
-                $or : [
-                    {name : {$regex : titleReg}}, 
-                    {category : product.category}
-                ]
-            })    
-            res.status(200).json({relatedProducts : products})
-        }catch(error){
+export const relatedProducts = async (req, res) => {
+    try {
+        const { id } = req.params
+        const product = await Product.findById(id)
+        if (!product) return res.status(404).json({ error: "product not found" })
+        let titleReg = new RegExp(product.name.split(' ').filter(word => word.length > 1).join('|'), 'i')
+        const products = await Product.find({
+            _id: {
+                $ne: id
+            },
+            $or: [
+                { name: { $regex: titleReg } },
+                { category: product.category }
+            ]
+        })
+        res.status(200).json({ relatedProducts: products })
+    } catch (error) {
         console.log('while getting related products ', error);
         res.status(404).json({ error: "internal error in server" })
     }
@@ -131,31 +129,44 @@ export const  relatedProducts = async (req ,res) =>{
 
 export const trendingProducts = async (req, res) => {
     try {
-        
-        const trending  = await Product.find({trend : true})
-        if(!trending) return  res.status(404).json({error : "product not found"})
-        res.status(200).json({message : 'trending products' , trending })
 
-    }catch(error){
+        const trending = await Product.find({ trend: true })
+        if (!trending) return res.status(404).json({ error: "product not found" })
+        res.status(200).json({ message: 'trending products', trending })
+
+    } catch (error) {
         console.log('while getting related products ', error);
         res.status(404).json({ error: "internal error in server" })
-   
+
     }
 }
 
 // make product trend 
 
-export const setProductTrend = async (req ,res ) =>{
-    try{
-        const {id} = req.body
-        const product  = await Product.findById(id )     
+export const setProductTrend = async (req, res) => {
+    try {
+        const { id } = req.body
+        const product = await Product.findById(id)
         product.trend = !product.trend
-        await product.save()   
-        res.status(200).json({message : 'set it to true or false'  })
+        await product.save()
+        res.status(200).json({ message: 'set it to true or false' })
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        
+
     }
 }
 
+
+export const searchEgine = async (req, res) => {
+    try {
+        const { searchWords } = req.query
+        const words = new RegExp(searchWords.split(' ').join('|'), 'i')
+        const products = await Product.find({
+            name: { $regex: words }
+        }).limit(8)
+        res.status(200).json({ products })
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -3,20 +3,24 @@ import { useParams } from "react-router-dom";
 import products from "../data/products";
 import ProductsCards from "../components/ProductsCards";
 import Footer from "../components/Footer";
+import { useProductStore } from "../Stores/useProductStore";
 const CategoryPage = () => {
+  const [ pagination, setPagination ] = useState(1);
   const { CategoryName } = useParams();
-  const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(data.length);
+  const { getProducts , products , totalePage} = useProductStore()
+  const [filter , setfilter] = useState({
+    page : 1 , 
+    category : CategoryName 
+  })
   useEffect(() => {
-    setData(
-      products.filter(
-        (product) => product.category === CategoryName.toLowerCase()
-      )
-    );
-  }, [CategoryName]);
+    setfilter({...filter , page : pagination})
+  }, [pagination]);
   useEffect(() => {
     window.scrollTo(0, 0);
   });
+  useEffect(() => {
+    getProducts(filter)
+  },[filter,getProducts]);
   return (
     <main className="max-w-screen-2xl mx-auto">
       <section className="container mx-auto space-y-12">
@@ -30,8 +34,15 @@ const CategoryPage = () => {
             classic
           </p>
         </section>
-        <ProductsCards products={data} />
+        <ProductsCards products={products} />
       </section>
+        <div className="flex items-center justify-center ">
+        {products.length > 0 && Array.from({ length: totalePage }, (_, index) => (
+            <button  className="  border-2 aspect-square border-rose-500 w-10 text-lg rounded " key={index} onClick={() => setPagination(index+1)}>
+              {index + 1}
+            </button>
+          ))}
+        </div>
          </main>
   );
 }                                                                                                                                                                         

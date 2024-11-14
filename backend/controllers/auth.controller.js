@@ -64,17 +64,9 @@ export const authLogin = async (req, res) => {
 
 export const authLogout = async (req, res) => {
     try {
-        const { accessToken } = req.cookies
-        try {
-            jwt.verify(accessToken, process.env.SECRET, (error, info) => {
-                if (error) throw error
-                res.clearCookie('accessToken');
-            })
-        } catch (error) {
-            console.log('Error during logout:' + error);
-
-        }
-        return res.status(200).json({ message: "logout succesfully" })
+ 
+          
+        res.status(200).clearCookie('accessToken').json({message : "logout successfuly"});
     } catch (error) {
         console.error('Error during logout:', error);
         return res.status(500).json({ message: 'Logout failed' });
@@ -87,11 +79,7 @@ export const authLogout = async (req, res) => {
 export const getProfile = async (req, res) => {
     try {
         const { accessToken } = req.cookies
-        
-    
-        
         return res.status(200).json({user : req.user})
-
 
     } catch (error) {
         console.log('Error occurred while getting the profile:', error);

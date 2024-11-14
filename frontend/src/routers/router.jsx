@@ -12,6 +12,7 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import ProfilePage from '../pages/ProfilePage';
 import DashboardPage from '../pages/DashboardPage';
+import ContactPage from '../pages/ContactPage';
 
 
 const router = createBrowserRouter([
@@ -38,7 +39,10 @@ const router = createBrowserRouter([
             {
                 path : '/product/:id',
                 element : <OneProductPage/>
-            },
+            },{
+                path : '/contact', 
+                element  : <ContactPage/>
+            }
             
         ]
     },{

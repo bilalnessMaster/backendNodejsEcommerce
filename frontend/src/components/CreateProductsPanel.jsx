@@ -151,7 +151,7 @@ const CreateProductsPanel = () => {
             <i className="ri-upload-cloud-line opacity-45" ></i>
           </span>
         </div>
-      {isUpload ? <span className="text-sm text-green-400 font-medium">Upload</span> : <span className="text-sm text-gray-400 font-medium">Image product</span>}
+      {isUpload ? <span className="text-sm text-green-400 font-medium">Uploaded</span> : <span className="text-sm text-gray-400 font-medium">Image product</span>}
       </label>
       <label
       htmlFor="description"

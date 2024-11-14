@@ -4,7 +4,7 @@ import { useProductStore } from '../Stores/useProductStore'
 const ProductComp = ({pagination, _id ,name , category ,  imageURL , price , trend}) => {
     
     
-    const {loading ,setTrend} = useProductStore()
+    const {loading ,setTrend ,DeleteProduct} = useProductStore()
   return (
     <tr className='border-b-2'>
         <td className='flex gap-2 px-2 py-2 '>
@@ -27,7 +27,7 @@ const ProductComp = ({pagination, _id ,name , category ,  imageURL , price , tre
             </button>
         </td>
         <td className='px-2  text-rose-500 '>
-            <button className='border-b-2 border-rose-500'>Delete</button>
+            <button onClick={()=>DeleteProduct(_id , pagination)} className='border-b-2 border-rose-500'>Delete</button>
         </td>
     </tr>
   )
