@@ -15,10 +15,10 @@ const DashboardPage = () => {
                 <Link to='/' className='rounded-full bg-neutral-800 flex justify-center items-center w-fit px-3 py-2 text-xl capitalize font-poppin cursor-pointer '><i className="ri-arrow-left-line text-xl text-white"></i></Link>
             </div>
             <ul className='w-full flex flex-col gap-1 bg-gray'>
-                <li onClick={()=>setIsOpen('create')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-profile-line text-xl"></i> Create product</li>
-                <li onClick={()=>setIsOpen('orders')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-list-ordered text-xl"></i> Orders</li>
-                <li onClick={()=>setIsOpen('users')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-bank-card-line text-xl"></i> Users</li>
-                <li onClick={()=>setIsOpen('products')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer'><i className="ri-bank-card-line text-xl"></i> Products</li>
+                <li onClick={()=>setIsOpen('create')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer flex gap-1 items-center'><i className="ri-profile-line text-xl"></i> <span className='md:block hidden'>Create product</span> </li>
+                <li onClick={()=>setIsOpen('orders')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer flex gap-1 items-center'><i className="ri-list-ordered text-xl"></i> <span className='md:block hidden'>Orders</span> </li>
+                <li onClick={()=>setIsOpen('users')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer flex gap-1  items-center'><i className="ri-group-line text-xl"></i> <span className='md:block hidden'>Users</span> </li>
+                <li onClick={()=>setIsOpen('products')} className='hover:bg-white/80 py-2 px-1 rounded-md cursor-pointer flex gap-1  items-center'><i className="ri-file-list-line text-xl"></i> <span className='md:block hidden'>Products</span></li>
             </ul>
         </div>
         <div className='flex-grow pt-16'>

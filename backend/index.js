@@ -6,7 +6,7 @@ import cors from 'cors'
 import authRouter from './Routes/auth.routes.js'
 import ProductRoute  from './Routes/products.routes.js'
 import CartRoute  from './Routes/cart.routes.js'
-
+import paymentRoute from './Routes/payment.routes.js'
 dotenv.config()
 const app = express();
 app.use(express.json({ limit: "25mb" }))
@@ -24,6 +24,8 @@ const port = process.env.PORT || 5002
 app.use('/api/auth', authRouter)
 app.use('/api/products' , ProductRoute)
 app.use('/api/cart' , CartRoute)
+app.use('/api/cart' , CartRoute)
+app.use('/api/payment' , paymentRoute)
 
 
 

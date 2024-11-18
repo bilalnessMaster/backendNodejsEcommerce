@@ -13,6 +13,8 @@ import RegisterPage from '../pages/RegisterPage';
 import ProfilePage from '../pages/ProfilePage';
 import DashboardPage from '../pages/DashboardPage';
 import ContactPage from '../pages/ContactPage';
+import SuccesfullyPage from '../pages/SuccesfullyPage';
+import CancelPage from '../pages/CancelPage';
 
 
 const router = createBrowserRouter([
@@ -42,6 +44,15 @@ const router = createBrowserRouter([
             },{
                 path : '/contact', 
                 element  : <ContactPage/>
+            },
+            {
+                path : '/purchase-success', 
+                element  : <SuccesfullyPage/>
+            }
+            ,
+            {
+                path : '/purchase-cancel', 
+                element  : <CancelPage/>
             }
             
         ]
