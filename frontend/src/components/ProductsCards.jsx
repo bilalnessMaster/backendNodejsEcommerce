@@ -7,7 +7,7 @@ const ProductsCards = ({products}) => {
             {
                products.length > 0 ?  products.map(product => (
                     <Card key={product._id} {...product} /> 
-                )): <h1 className='text-center w-full'>not product found</h1>
+                )): <h1 className='text-center mx-auto  w-full'>no product found</h1>
             }
     </section>
   )

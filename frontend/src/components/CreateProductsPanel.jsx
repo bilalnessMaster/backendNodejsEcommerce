@@ -64,6 +64,7 @@ const CreateProductsPanel = () => {
 
         <span className="font-medium">Category</span>
         <select name="category" onChange={(e) => setDataForm({ ...dataForm, category: e.target.value })} className='h-9 rounded border outline-none border-gray-300' id="">
+          <option value="">chose category</option>
           <option value="Accessories">Accessories</option>
           <option value="Dress collection">Dress collection</option>
           <option value="Jewellery">Jewellery</option>
