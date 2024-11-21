@@ -12,6 +12,7 @@ export const useProductStore = create((set, get)=>(
         singleProduct : {} , 
         loading : false , 
         totalePage : 1,
+        relatedProducts : [],
         
         createProduct : async (dataform) => {
             try{
@@ -43,7 +44,7 @@ export const useProductStore = create((set, get)=>(
                 try{
 
                     const {data} = await axios.get(`products/${id}`)
-                    set({singleProduct: data.product})
+                    set({singleProduct: data.product , relatedProducts : data.relatedProducts})
 
 
                 }catch(error){

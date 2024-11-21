@@ -90,7 +90,17 @@ export const getSingleProduct = async (req, res) => {
         const product = await Product.findById(id)
         const review = await Review.find({ productId: id }).populate('userId', ['firstName', 'profileImage'])
         if (!product) return res.status(404).json({ error: 'product not found' })
-        return res.status(200).json({ message: 'product found', product: product, reviews: review })
+        let titleReg = new RegExp(product.name.split(' ').filter(word => word.length > 1).join('|'), 'i')
+        const products = await Product.find({
+            _id: {
+                $ne: id
+            },
+            $or: [
+                { name: { $regex: titleReg } },
+                { category: product.category }
+            ]
+        })
+        return res.status(200).json({ message: 'product found', product: product, reviews: review  , relatedProducts :products })
 
 
     } catch (error) {

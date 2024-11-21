@@ -6,3 +6,6 @@
 body { 
     position: relative;
 }
+.slick-slide > div {
+    margin : 3px;
+  }
