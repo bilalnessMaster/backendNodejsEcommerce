@@ -8,8 +8,11 @@ import Card from "../components/Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useReviewStore } from "../Stores/useReviewStore";
+import Reviews from "../components/Reviews";
 const OneProductPage = () => {
   const {getSingleProduct , singleProduct , relatedProducts}  =useProductStore()
+ 
   const { id } = useParams();
   let settings = {
     dots: true,
@@ -152,13 +155,19 @@ const OneProductPage = () => {
         <div>
           <h1 className="font-play text-xl mb-4">You May Also Like</h1>
         </div>
-      <Slider {...settings}>
+           <Slider {...settings}>
         {
             relatedProducts.map(product => (
               <Card key={product._id} {...product} />
             ))
         }
             </Slider>
+      </div>
+      <div>
+        <h1 className="font-play text-xl mb-4">Review :</h1>
+        <div className="review">
+          {id && <Reviews productId={id} />}
+        </div>
       </div>
     </main>
   );

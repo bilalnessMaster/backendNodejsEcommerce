@@ -148,9 +148,18 @@ export const editProfile = async (req, res) => {
         
         let cloudinaryResponse = null
         if(profileImage) { 
-                cloudinaryResponse = await cloudinary.uploader.upload(profileImage , {
+            let imgurl = req.user.profileImage.split('/').pop().split('.')[0]
+            if(imgurl){
+                try{
+                    await cloudinary.uploader.destroy(`users/${imgurl}`)
+                }catch(error){
+                    console.log('error happend while destroy image in cloudinary '+error);
+                    
+                }
+            }
+            cloudinaryResponse = await cloudinary.uploader.upload(profileImage , {
                     folder : 'users'
-                })
+            })
         }
         
         if (!req.user._id) return res.status(404).json({ message: "Id is required" })

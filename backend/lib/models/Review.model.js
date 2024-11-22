@@ -11,12 +11,12 @@ const reviewSchema = new Schema({
     rating : {
         type : Number, 
         required : true
-    } ,
+    },
     userId : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     },
-    product : { 
+    productId : { 
         type : mongoose.Schema.Types.ObjectId, 
         ref : 'Product'
     }

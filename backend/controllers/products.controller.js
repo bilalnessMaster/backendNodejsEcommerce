@@ -70,8 +70,16 @@ export const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params
         const product = await Product.findByIdAndDelete(id)
-        let imgurl = product.imageURL.split('/').pop().split('.')[0]
         if (!product) return res.status(404).json({ error: "product doesnt exist " })
+        let imgurl = product.imageURL.split('/').pop().split('.')[0]
+        if(imgurl){
+            try{
+                await cloudinary.uploader.destroy(`products/${imgurl}`)
+            }catch(error){
+                console.log('error happend while destroy image in cloudinary '+error);
+                
+            }
+        }
         res.status(200).json({ message: "product has been deleted !!" })
     } catch (error) {
         console.log('while delete product', error);
