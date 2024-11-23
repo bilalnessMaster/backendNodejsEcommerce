@@ -11,6 +11,8 @@ const Reviews = ({productId}) => {
       getReviews(productId)
 
     },[getReviews])
+    console.log(Reviews);
+    
   return (
     <div className="">
       <div className="space-y-3">

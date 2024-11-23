@@ -124,7 +124,7 @@ const OneProductPage = () => {
             <div className="flex flex-col gap-2">
               <div>
                 <h1 className="font-medium text-xl ">Description</h1>
-                <p className="text-gray-500/90 w-[600px]">{singleProduct.description}</p>
+                <p className="text-gray-500/90  max-w-lg">{singleProduct.description}</p>
               </div>
               <div>
                 <h1 className="font-medium text-xl">Color:</h1>

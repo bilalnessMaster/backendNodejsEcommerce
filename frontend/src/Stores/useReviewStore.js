@@ -7,11 +7,10 @@ export const useReviewStore = create((set , get)=>({
     Reviewss : [] , 
     getReviews : async (id) => {
         try{
-            console.log(id);
+          
             
             const {data} = await axios.get(`reviews/${id}`);
-            console.log('after');
-            console.log(data.reviews);
+      
             
             set({Reviewss: data.reviews})
         }catch(error){
@@ -21,11 +20,22 @@ export const useReviewStore = create((set , get)=>({
     },
     addReview : async (dataform) => {
         try{
-            const {data} = await axios.post('review' , dataform)
-            set({Reviewss: data.Reviews})
+            console.log(dataform);
+            
+            const {data} = await axios.post('reviews' , dataform)
+            set({Reviewss: data.reviews})
         }catch(error){
             console.log('erro happend while getting the reviews ' + error);
             
         }        
+    },
+    deteleReview : async (id) => { 
+        try{
+            const {data} = await axios.delete(`reviews/${id}`)
+            set({Reviewss: data.reviews})
+        }catch(error){
+            console.log(error);
+            
+        }
     }
 }))

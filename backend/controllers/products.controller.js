@@ -98,6 +98,18 @@ export const getSingleProduct = async (req, res) => {
         const product = await Product.findById(id)
         const review = await Review.find({ productId: id }).populate('userId', ['firstName', 'profileImage'])
         if (!product) return res.status(404).json({ error: 'product not found' })
+        const reviews = await Review.find({productId:product._id})
+        const totalReviews = reviews.length
+        if(totalReviews > 0){
+            const totalrate = reviews.reduce((prev, curr)=> prev +curr.rating , 0)
+            const rating = totalrate/totalReviews
+            product.rating = rating
+    
+            await product.save()
+        }
+        
+        
+    
         let titleReg = new RegExp(product.name.split(' ').filter(word => word.length > 1).join('|'), 'i')
         const products = await Product.find({
             _id: {
