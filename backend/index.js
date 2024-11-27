@@ -8,6 +8,7 @@ import ProductRoute  from './Routes/products.routes.js'
 import CartRoute  from './Routes/cart.routes.js'
 import paymentRoute from './Routes/payment.routes.js'
 import ReviewRoute from './Routes/review.route.js'
+import OrderRoute from './Routes/order.routes.js'
 
 dotenv.config()
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/cart', CartRoute)
 app.use('/api/cart', CartRoute)
 app.use('/api/payment', paymentRoute)
 app.use('/api/reviews', ReviewRoute)
+app.use('/api/orders', OrderRoute)
 
 
 
