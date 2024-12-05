@@ -1,12 +1,12 @@
 import Order from "../lib/models/Order.model.js"
-
+import Product from '../lib/models/Product.model.js'
 
 export const getAllOrders = async (req , res) => {
     try {
-        const {page=1 , limit = 10} = req.query
+        const {page=1 , limit = 6} = req.query
         let skip = (page-1)*limit
         const totalPage= await Order.countDocuments()
-        const pages = totalPage/limit
+        const pages = Math.ceil(totalPage/limit)
         const revenue = await Order.aggregate([
             {
                 $group :  {
@@ -36,5 +36,24 @@ export const changeStatus = async (req , res ) => {
     }catch(error){
       console.log('error happend while change status '+error);
       
+    }
+}
+
+export const getSingle = async (req ,res) => { 
+    try {
+        const {id} = req.params
+        const order = await Order.findById(id)
+        if(!order) return res.status(403).json({message : 'order not found', order})
+        const products = await Product.find({_id :{$in :order.products } })
+        
+        const items = products.map(product => {
+            const detail = order.products.find(item => item._id == product.id ) 
+            return {quantity: detail.quantity , ...product._doc}
+         
+        })
+        
+        return res.status(200).json({order , items : items})    
+    } catch (error) {
+        console.log('error happend while getting single order '+error);
     }
 }

@@ -29,6 +29,7 @@ const userSchema = new Schema({
         type: String,
         default: 'customer'
     },
+    addresse : String , 
     profileImage: String,
     bio: {
         type: String,
@@ -43,7 +44,7 @@ const userSchema = new Schema({
             },
             product: { 
                 type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Product' }
+            ref: 'Product' }
         }
     ]
 

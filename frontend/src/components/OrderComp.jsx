@@ -47,7 +47,7 @@ const OrderComp = ({createdAt , _id , userId , status , page}) => {
       </select>
     </td>
     <td className="py-[0.6rem] px-3 ">
-      <Link className="border-b-2 border-blue-500 text-blue-500" to='details/'>details</Link>
+      <Link className="border-b-2 border-blue-500 text-blue-500" to={`/details/${_id}`}>Details</Link>
     </td>
   </tr>
   )

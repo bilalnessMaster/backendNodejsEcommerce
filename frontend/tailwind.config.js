@@ -5,6 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+          DEFAULT: "1rem",
+          md: "2rem",
+          lg: "4rem",
+      },
+    },
     extend: {
       maxWidth: {
         'screen-2xl': '1400px', 

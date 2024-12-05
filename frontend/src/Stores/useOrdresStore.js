@@ -4,8 +4,10 @@ import axios from '../lib/axios';
 
 export const useOrdresStore = create((set, get)=>({
     orders : [],
+    order : null ,
     revenue: {} ,
     pages : null,
+    products : [],
     getAllOrders : async (setting) => { 
         try{
 
@@ -27,6 +29,14 @@ export const useOrdresStore = create((set, get)=>({
         }catch(error){
           console.log('error happend while change status of order '+ error);
           
+        }
+    },
+    getOrder :async (id) => { 
+        try {
+            const {data} = await axios.get(`orders/singleOrder/${id}`)
+            set({order : data.order , products : data.items})
+        } catch (error) {
+            console.log('error happend while getting single order  '+ error);
         }
     }
 }))

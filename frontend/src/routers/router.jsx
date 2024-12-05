@@ -14,6 +14,7 @@ import SuccesfullyPage from '../pages/SuccesfullyPage';
 import CancelPage from '../pages/CancelPage';
 import { useUserStore } from '../Stores/useUserStore';
 import ProtectedRoute from '../middlware/ProtectedRoute';
+import DetailsPage from '../pages/DetailsPage';
 
 // Protect routes based on user authentication
 
@@ -58,11 +59,15 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: (<ProtectedRoute admin={true}  >
-            <DashboardPage />
-        </ProtectedRoute>
-        ),
+        element: (<ProtectedRoute admin={true}  > <DashboardPage /></ProtectedRoute>),   
     },
+    {
+        path: '/details/:id',
+        element: (<ProtectedRoute admin={true}  ><DetailsPage /></ProtectedRoute>)
+    },
+
+
+    
 ]);
 
 export default router;

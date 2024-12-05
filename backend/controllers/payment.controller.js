@@ -5,6 +5,8 @@ import {stripe} from '../lib/stripe/stripe.js'
 export const PaymentController = async (req , res) =>{
     try{
         const {cartItems }= req.body
+        console.log(cartItems);
+        
         if(!Array.isArray(cartItems) || cartItems.length === 0 ){
             return res.status(400).json({message : "products are required"})
         } 
@@ -65,7 +67,7 @@ export const checkoutSession = async (req ,  res) => {
             const order  = new Order({
                     userId  : session.metadata.userId, 
                     products : products.map((product =>({ 
-                        productId : product.id ,
+                        _id : product.id ,
                         quantity : product.quantity,
                     }))),
                     totalPrice : session.amount_total/100,
